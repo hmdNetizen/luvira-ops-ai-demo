@@ -1,0 +1,1 @@
+If the Auth API error rate exceeds 85%, the operator should trigger a container restart and clear the Redis cache. Priority: High.

@@ -1,0 +1,8 @@
+gradient
+fastapi
+uvicorn
+pydantic>=2.7.4
+gradient-adk>=0.1.2
+gradientai
+python-dotenv==1.0.1
+requests>=2.32.5

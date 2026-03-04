@@ -137,6 +137,8 @@ celerybeat.pid
 # Node
 node_modules/
 
+dist/
+
 # Environments
 .env
 .env.*

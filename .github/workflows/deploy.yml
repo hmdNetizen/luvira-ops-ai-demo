@@ -1,0 +1,83 @@
+name: Deploy Backend to VPS
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'backend/**'  # Only trigger on backend changes
+      - '.github/workflows/deploy.yml'
+  workflow_dispatch:  # Allows manual trigger
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build Docker image
+        working-directory: ./backend
+        run: |
+          docker build -t luvira-ops-backend:latest .
+          docker save luvira-ops-backend:latest | gzip > luvira-ops-backend.tar.gz
+
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.VPS_SSH_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.VPS_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Transfer Docker image to VPS
+        run: |
+          scp ./backend/luvira-ops-backend.tar.gz ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_HOST }}:/tmp/
+
+      - name: Deploy on VPS
+        run: |
+          ssh ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_HOST }} << 'EOF'
+            # Load the new image
+            docker load < /tmp/luvira-ops-backend.tar.gz
+
+            # Stop and remove old container if exists
+            docker stop luvira-ops-backend 2>/dev/null || true
+            docker rm luvira-ops-backend 2>/dev/null || true
+
+            # Create app directory if it doesn't exist
+            mkdir -p /opt/luvira-ops
+
+            # Run new container with .env file mounted from VPS
+            docker run -d \
+              --name luvira-ops-backend \
+              --restart unless-stopped \
+              -p 8080:8080 \
+              --env-file /opt/luvira-ops/.env \
+              luvira-ops-backend:latest
+
+            # Clean up
+            rm /tmp/luvira-ops-backend.tar.gz
+
+            # Show container status
+            docker ps | grep luvira-ops-backend
+          EOF
+
+      - name: Verify deployment
+        run: |
+          ssh ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_HOST }} << 'EOF'
+            # Wait for container to be healthy
+            sleep 5
+
+            # Check if container is running
+            if docker ps | grep -q luvira-ops-backend; then
+              echo "Deployment successful! Container is running."
+              docker logs --tail 20 luvira-ops-backend
+            else
+              echo "Deployment failed! Container is not running."
+              docker logs luvira-ops-backend
+              exit 1
+            fi
+          EOF

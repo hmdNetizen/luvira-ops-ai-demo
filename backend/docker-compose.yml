@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: luvira-ops-backend
+    ports:
+      - "8080:8080"
+    environment:
+      - GRADIENT_MODEL_ACCESS_KEY=${GRADIENT_MODEL_ACCESS_KEY}
+      - GRADIENT_MODEL_SLUG=${GRADIENT_MODEL_SLUG}
+      - KNOWLEDGE_BASE_ID=${KNOWLEDGE_BASE_ID}
+      - DIGITALOCEAN_TOKEN=${DIGITALOCEAN_TOKEN}
+    env_file:
+      - .env
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:8080/docs')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s

@@ -11,7 +11,7 @@ interface TraceWorkflowProps {
 
 export function TraceWorkflow({ summary, steps }: TraceWorkflowProps) {
   return (
-    <div className="bg-[#1c1d1f] rounded-xl border border-border p-5">
+    <div className="bg-[#1c1d1f] rounded-xl border-2 border-gray-100/10 p-5 flex-3">
       <h2 className="text-base font-semibold text-card-foreground mb-4">
         Trace Workflow
       </h2>

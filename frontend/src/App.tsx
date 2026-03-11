@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { Sidebar } from "./components/dashboard/Sidebar";
-import { Header } from "./components/dashboard/Header";
-import { IncidentChart } from "./components/dashboard/IncidentChart";
-import { RiskMeter } from "./components/dashboard/RiskMeter";
-import { TraceWorkflow } from "./components/dashboard/TraceWorkflow";
+import { Sidebar } from "./components/dashboard/side-bar";
+import { Header } from "./components/dashboard/header";
+import { IncidentChart } from "./components/dashboard/incident-chart";
+import { RiskMeter } from "./components/dashboard/risk-meter";
+import { TraceWorkflow } from "./components/dashboard/track-workflow";
+import ChartHeader from "./components/dashboard/chart-header";
 
 function App() {
   const [isSimulating, setIsSimulating] = useState(true);
@@ -15,10 +16,11 @@ function App() {
       <div className="flex-1 flex flex-col overflow-hidden">
         <Header onSimulate={() => setIsSimulating((prev) => !prev)} />
 
-        <main className="flex-1 overflow-y-auto p-6 space-y-6">
+        <main className="flex-1 overflow-y-auto p-6 space-y-4">
+          <ChartHeader />
           <IncidentChart isSimulating={isSimulating} />
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="flex w-full gap-5">
             <RiskMeter
               percentage={88}
               latency="1355ms"

@@ -13,11 +13,7 @@ export default function Overview() {
       <IncidentChart isSimulating={isSimulating} />
 
       <div className="flex w-full gap-5">
-        <RiskMeter
-          percentage={88}
-          latency="1355ms"
-          traceId="UVIRA-C67DC4"
-        />
+        <RiskMeter percentage={88} latency="1355ms" traceId="UVIRA-C67DC4" />
         <TraceWorkflow
           summary={[
             "Auth API error spike detected",

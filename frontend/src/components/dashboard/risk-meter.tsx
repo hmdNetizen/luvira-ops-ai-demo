@@ -72,6 +72,15 @@ export function RiskMeter({ percentage, latency, traceId }: RiskMeterProps) {
   const greenStart = filledAngle + 3;
   const greenEnd = Math.min(filledAngle + 25, endAngle);
 
+  // Threshold-based arc color
+  const threshold = 85;
+  const arcColor =
+    animatedPercent >= threshold
+      ? "#ef4444" // red - exceeded threshold
+      : animatedPercent >= 70
+        ? "#facc15" // yellow - approaching threshold
+        : "#22c55e"; // green - safe
+
   // Circumference for stroke-dasharray animation
   const circumference = 2 * Math.PI * radius;
   const totalArcLength = (totalAngle / 360) * circumference;
@@ -94,8 +103,8 @@ export function RiskMeter({ percentage, latency, traceId }: RiskMeterProps) {
             </feMerge>
             {/* </filter> */}
             <linearGradient id="arcGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#3bcaca" />
-              <stop offset="100%" stopColor="#2dd4a8" />
+              <stop offset="0%" stopColor={arcColor} />
+              <stop offset="100%" stopColor={arcColor} stopOpacity={0.7} />
             </linearGradient>
           </defs>
 
@@ -126,7 +135,7 @@ export function RiskMeter({ percentage, latency, traceId }: RiskMeterProps) {
               cx={tick.x}
               cy={tick.y}
               r={1.5}
-              fill={tick.isFilled ? "#3bcaca" : "#3a3d42"}
+              fill={tick.isFilled ? arcColor : "#3a3d42"}
               opacity={tick.isFilled ? 0.6 : 0.4}
             />
           ))}
@@ -136,7 +145,7 @@ export function RiskMeter({ percentage, latency, traceId }: RiskMeterProps) {
             <path
               d={describeArc(greenStart, greenEnd, radius - 1)}
               fill="none"
-              stroke="#4ade80"
+              stroke={arcColor}
               strokeWidth={14}
               strokeLinecap="round"
               opacity={0.7}
@@ -148,7 +157,7 @@ export function RiskMeter({ percentage, latency, traceId }: RiskMeterProps) {
             cx={dotPos.x}
             cy={dotPos.y}
             r={9}
-            fill="#3bcaca"
+            fill={arcColor}
             opacity={0.3}
           />
           <circle cx={dotPos.x} cy={dotPos.y} r={7} fill="#1c1d1f" />

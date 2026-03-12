@@ -1,7 +1,7 @@
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 
 const data = [
-  { name: "Follow", value: 12000, color: "#facc15" },
+  { name: "Follow", value: 12000, color: "#818ca1" },
   { name: "Unfollow", value: 23000, color: "#3bcaca" },
   { name: "Like", value: 50000, color: "#f97316" },
   { name: "Unlike", value: 88000, color: "#22c55e" },

@@ -23,16 +23,106 @@ interface User {
 }
 
 const users: User[] = [
-  { id: 1, name: "Philip Light", email: "philigt@gmail.com", username: "@phi_lit12", dateJoined: "May. 12th, 2025", generatedCards: 200, subscription: "Basic plan", avatar: "bg-purple-500" },
-  { id: 2, name: "Freeman John", email: "freemanjohn@gmail.com", username: "@freemanjohn88", dateJoined: "May. 13th, 2025", generatedCards: 500, subscription: "Enterprise plan", avatar: "bg-blue-500" },
-  { id: 3, name: "Vivian Brown", email: "vivianbrown11@gmail.com", username: "@vivibrown", dateJoined: "May. 13th, 2025", generatedCards: 25, subscription: "Premium plan", avatar: "bg-pink-500" },
-  { id: 4, name: "Tony Light", email: "ttlight@gmail.com", username: "@ttlight", dateJoined: "May. 13th, 2025", generatedCards: 0, subscription: "Enterprise plan", avatar: "bg-teal-500" },
-  { id: 5, name: "Philip May", email: "philigt@gmail.com", username: "@phi_lit12", dateJoined: "May. 14th, 2025", generatedCards: 0, subscription: "Basic plan", avatar: "bg-orange-500" },
-  { id: 6, name: "Luke Man", email: "lukeman23@gmail.com", username: "@luki23", dateJoined: "May. 15th, 2025", generatedCards: 0, subscription: "Premium plan", avatar: "bg-green-500" },
-  { id: 7, name: "Pauline Stie", email: "paulinestike@gmail.com", username: "@paulinestike", dateJoined: "May. 15th, 2025", generatedCards: 0, subscription: "Basic plan", avatar: "bg-red-500" },
-  { id: 8, name: "Ekene Orji", email: "ekeneorji@gmail.com", username: "@ekene3339", dateJoined: "May. 16th, 2025", generatedCards: 0, subscription: "Basic plan", avatar: "bg-indigo-500" },
-  { id: 9, name: "Eugene Mark", email: "eugenemark32@gmail.com", username: "@eugenemark45", dateJoined: "May. 17th, 2025", generatedCards: 0, subscription: "Premium plan", avatar: "bg-yellow-500" },
-  { id: 10, name: "Luke Man", email: "lukeman23@gmail.com", username: "@luki23", dateJoined: "May. 19th, 2025", generatedCards: 0, subscription: "Enterprise plan", avatar: "bg-cyan-500" },
+  {
+    id: 1,
+    name: "Philip Light",
+    email: "philigt@gmail.com",
+    username: "@phi_lit12",
+    dateJoined: "May. 12th, 2025",
+    generatedCards: 200,
+    subscription: "Basic plan",
+    avatar: "bg-purple-500",
+  },
+  {
+    id: 2,
+    name: "Freeman John",
+    email: "freemanjohn@gmail.com",
+    username: "@freemanjohn88",
+    dateJoined: "May. 13th, 2025",
+    generatedCards: 500,
+    subscription: "Enterprise plan",
+    avatar: "bg-blue-500",
+  },
+  {
+    id: 3,
+    name: "Vivian Brown",
+    email: "vivianbrown11@gmail.com",
+    username: "@vivibrown",
+    dateJoined: "May. 13th, 2025",
+    generatedCards: 25,
+    subscription: "Premium plan",
+    avatar: "bg-pink-500",
+  },
+  {
+    id: 4,
+    name: "Tony Light",
+    email: "ttlight@gmail.com",
+    username: "@ttlight",
+    dateJoined: "May. 13th, 2025",
+    generatedCards: 0,
+    subscription: "Enterprise plan",
+    avatar: "bg-teal-500",
+  },
+  {
+    id: 5,
+    name: "Philip May",
+    email: "philigt@gmail.com",
+    username: "@phi_lit12",
+    dateJoined: "May. 14th, 2025",
+    generatedCards: 0,
+    subscription: "Basic plan",
+    avatar: "bg-orange-500",
+  },
+  {
+    id: 6,
+    name: "Luke Man",
+    email: "lukeman23@gmail.com",
+    username: "@luki23",
+    dateJoined: "May. 15th, 2025",
+    generatedCards: 0,
+    subscription: "Premium plan",
+    avatar: "bg-green-500",
+  },
+  {
+    id: 7,
+    name: "Pauline Stie",
+    email: "paulinestike@gmail.com",
+    username: "@paulinestike",
+    dateJoined: "May. 15th, 2025",
+    generatedCards: 0,
+    subscription: "Basic plan",
+    avatar: "bg-red-500",
+  },
+  {
+    id: 8,
+    name: "Ekene Orji",
+    email: "ekeneorji@gmail.com",
+    username: "@ekene3339",
+    dateJoined: "May. 16th, 2025",
+    generatedCards: 0,
+    subscription: "Basic plan",
+    avatar: "bg-indigo-500",
+  },
+  {
+    id: 9,
+    name: "Eugene Mark",
+    email: "eugenemark32@gmail.com",
+    username: "@eugenemark45",
+    dateJoined: "May. 17th, 2025",
+    generatedCards: 0,
+    subscription: "Premium plan",
+    avatar: "bg-yellow-500",
+  },
+  {
+    id: 10,
+    name: "Luke Man",
+    email: "lukeman23@gmail.com",
+    username: "@luki23",
+    dateJoined: "May. 19th, 2025",
+    generatedCards: 0,
+    subscription: "Enterprise plan",
+    avatar: "bg-cyan-500",
+  },
 ];
 
 const columns = [
@@ -53,9 +143,9 @@ export default function UserManagement() {
       <h2 className="text-lg font-semibold text-foreground">User Management</h2>
 
       {/* Filters */}
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between ">
         <div className="flex items-center gap-3">
-          <div className="flex items-center gap-2 bg-[#1c1d1f] border border-border rounded-lg px-3 py-2 w-72">
+          <div className="flex items-center gap-2 bg-[#1c1d1f] border-2 border-gray-100/10 rounded-lg px-3 py-2 w-72">
             <Search className="size-4 text-muted-foreground" />
             <input
               type="text"
@@ -64,20 +154,29 @@ export default function UserManagement() {
             />
           </div>
 
-          <Button variant="outline" className="gap-2 bg-[#1c1d1f] border-border text-foreground">
+          <Button
+            variant="outline"
+            className="gap-2 bg-[#1c1d1f] border-2 border-gray-100/10 text-foreground"
+          >
             All Subscription
             <ChevronDown className="size-4" />
           </Button>
         </div>
 
         <div className="flex items-center gap-3">
-          <Button variant="outline" className="gap-2 bg-[#1c1d1f] border-border text-foreground">
+          <Button
+            variant="outline"
+            className="gap-2 bg-[#1c1d1f] border-2 border-gray-100/10 text-foreground"
+          >
             <Calendar className="size-4" />
             Select Dates
             <ChevronDown className="size-4" />
           </Button>
 
-          <Button variant="outline" className="gap-2 bg-[#1c1d1f] border-border text-foreground">
+          <Button
+            variant="outline"
+            className="gap-2 bg-[#1c1d1f] border-2 border-gray-100/10 text-foreground"
+          >
             <Download className="size-4" />
             Export
           </Button>
@@ -85,10 +184,10 @@ export default function UserManagement() {
       </div>
 
       {/* Table */}
-      <div className="bg-[#1c1d1f] rounded-xl border border-border overflow-hidden">
+      <div className="bg-[#1c1d1f] rounded-md border-2 border-gray-100/10 overflow-hidden">
         <table className="w-full">
           <thead>
-            <tr className="border-b border-border">
+            <tr className="border-b-2 border-gray-100/10 bg-gray-50/5">
               {columns.map((col) => (
                 <th
                   key={col}
@@ -104,7 +203,7 @@ export default function UserManagement() {
             {users.map((user) => (
               <tr
                 key={user.id}
-                className="border-b border-border last:border-b-0 hover:bg-white/[0.02] transition-colors"
+                className="border-b border-border last:border-b-0 hover:bg-white/2 transition-colors"
               >
                 <td className="px-4 py-3">
                   <div className="flex items-center gap-3">
@@ -197,7 +296,10 @@ export default function UserManagement() {
       {/* Bottom section: Date selector + Growth chart */}
       <div className="flex gap-5">
         <div className="flex-1">
-          <Button variant="outline" className="gap-2 bg-[#1c1d1f] border-border text-foreground">
+          <Button
+            variant="outline"
+            className="gap-2 bg-[#1c1d1f] border-border text-foreground"
+          >
             <Calendar className="size-4" />
             Select Dates
             <ChevronDown className="size-4" />

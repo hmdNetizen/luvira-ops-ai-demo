@@ -8,15 +8,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
-import { useSimulateIncidentSpike } from "@/services/mutations";
+import { useSimulation } from "@/hooks/use-simulation";
+import type { TIncidentRequestPayload } from "@/services/types";
 
-interface ErrorData {
-  error_rate: number;
-  message: string;
-  service_name: string;
-}
-
-const errorOptions: ErrorData[] = [
+const errorOptions: TIncidentRequestPayload[] = [
   {
     error_rate: 0.92,
     message: "Auth API error rate exceeding 85%",
@@ -45,13 +40,13 @@ const errorOptions: ErrorData[] = [
 ];
 
 export function Header() {
-  const { mutate, isPending } = useSimulateIncidentSpike();
-  const [selectedError, setSelectedError] = useState<ErrorData>(
+  const { simulate, isPending } = useSimulation();
+  const [selectedError, setSelectedError] = useState<TIncidentRequestPayload>(
     errorOptions[0],
   );
 
   const onSimulateIncidentSpikeHandler = () => {
-    mutate(selectedError);
+    simulate(selectedError);
   };
 
   const handleSelectChange = (serviceName: string) => {

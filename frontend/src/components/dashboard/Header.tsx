@@ -1,11 +1,64 @@
-import { Bell, ChevronDown } from "lucide-react";
+import { useState } from "react";
+import { Bell, ChevronDown, Loader } from "lucide-react";
 import { Button } from "../ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
+import { useSimulateIncidentSpike } from "@/services/mutations";
 
-interface HeaderProps {
-  onSimulate: () => void;
+interface ErrorData {
+  error_rate: number;
+  message: string;
+  service_name: string;
 }
 
-export function Header({ onSimulate }: HeaderProps) {
+const errorOptions: ErrorData[] = [
+  {
+    error_rate: 0.92,
+    message: "Auth API error rate exceeding 85%",
+    service_name: "Auth API",
+  },
+  {
+    error_rate: 0.78,
+    message: "Payment Gateway timeout rate spiking",
+    service_name: "Payment Gateway",
+  },
+  {
+    error_rate: 0.85,
+    message: "User Service 5xx errors above threshold",
+    service_name: "User Service",
+  },
+  {
+    error_rate: 0.67,
+    message: "Notification Service delivery failures",
+    service_name: "Notification Service",
+  },
+  {
+    error_rate: 0.91,
+    message: "Search Index latency exceeding SLA",
+    service_name: "Search Index",
+  },
+];
+
+export function Header() {
+  const { mutate, isPending } = useSimulateIncidentSpike();
+  const [selectedError, setSelectedError] = useState<ErrorData>(
+    errorOptions[0],
+  );
+
+  const onSimulateIncidentSpikeHandler = () => {
+    mutate(selectedError);
+  };
+
+  const handleSelectChange = (serviceName: string) => {
+    const found = errorOptions.find((e) => e.service_name === serviceName);
+    if (found) setSelectedError(found);
+  };
+
   return (
     <header className="border-b border-border px-6 bg-[#1c1d1f]">
       <div className="flex items-center justify-between h-16">
@@ -14,11 +67,35 @@ export function Header({ onSimulate }: HeaderProps) {
         </h1>
 
         <div className="flex items-center gap-4">
-          <Button
-            onClick={onSimulate}
-            className="bg-brand hover:bg-brand-dark text-white font-medium px-6 rounded-md"
+          <Select
+            value={selectedError.service_name}
+            onValueChange={handleSelectChange}
           >
-            Simulate Incident Spike
+            <SelectTrigger className="w-52 bg-[#1c1d1f] border-2 border-gray-100/10 text-foreground">
+              <SelectValue placeholder="Select error" />
+            </SelectTrigger>
+            <SelectContent className="bg-[#1c1d1f] border-gray-100/10">
+              {errorOptions.map((opt) => (
+                <SelectItem
+                  key={opt.service_name}
+                  value={opt.service_name}
+                  className="text-foreground focus:bg-white/5 focus:text-foreground"
+                >
+                  {opt.service_name}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+
+          <Button
+            onClick={onSimulateIncidentSpikeHandler}
+            className="bg-brand hover:bg-brand-dark text-white font-medium px-6 py-5 min-w-40 rounded-md"
+          >
+            {isPending ? (
+              <Loader className="size-6 animate-spin" />
+            ) : (
+              "Simulate Incident Spike"
+            )}
           </Button>
 
           <Button variant="outline" size="icon">

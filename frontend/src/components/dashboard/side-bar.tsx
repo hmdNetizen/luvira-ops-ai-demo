@@ -21,7 +21,7 @@ const navItems = [
 
 export function Sidebar() {
   return (
-    <aside className="w-64 bg-sidebar flex flex-col border-r border-sidebar-border shrink-0">
+    <aside className="w-64 bg-sidebar flex flex-col border-r-2 border-gray-100/10 shrink-0">
       <div className="p-5 flex items-center gap-2">
         <img
           src="/assets/luvira-logo.png"

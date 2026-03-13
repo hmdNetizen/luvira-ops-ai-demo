@@ -48,7 +48,12 @@ export default function Overview() {
 
       <div className="flex w-full gap-5">
         <RiskMeter percentage={riskScore} latency={latency} traceId={traceId} />
-        <TraceWorkflow summary={summary} steps={steps} />
+        <TraceWorkflow
+          summary={summary}
+          steps={steps}
+          triggered={data?.risk.triggered}
+          plan={data?.plan.steps}
+        />
       </div>
     </main>
   );
